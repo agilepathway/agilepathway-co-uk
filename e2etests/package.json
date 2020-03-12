@@ -1,0 +1,11 @@
+{
+    "name": "agilepathway-co-uk",
+    "version": "0.0.1",
+    "description": "Gauge end to end tests for agilepathway",
+    "scripts": {
+      "test": "gauge run specs/"
+    },
+    "dependencies": {
+      "taiko": "^0.5.0"
+    }
+  }
