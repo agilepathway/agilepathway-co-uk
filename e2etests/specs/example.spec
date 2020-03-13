@@ -1,11 +1,6 @@
-# Getting Started with Gauge
+# Agile Pathway spec
 
-This is an executable specification file. This file follows markdown syntax. Every heading in this file denotes a scenario. Every bulleted point denotes a step.
-To execute this specification, use
-	npm test
+## Home page
 
-## Search Google
-
-* Goto Google's search page
-* Search for "github Taiko"
-* Page contains "getgauge/taiko"
+* Goto Agile Pathway's home page
+* Page contains "Agile Pathway Ltd"

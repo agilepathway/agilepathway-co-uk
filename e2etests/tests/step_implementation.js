@@ -3,6 +3,7 @@
 const { openBrowser,write, closeBrowser, goto, press,text, contains } = require('taiko');
 const assert = require("assert");
 const headless = process.env.headless_chrome.toLowerCase() === 'true';
+const site_url = process.env.TEST_SITE_URL
 
 beforeSuite(async () => {
     await openBrowser({ headless: headless })
@@ -12,13 +13,8 @@ afterSuite(async () => {
     await closeBrowser();
 });
 
-step("Goto Google's search page", async () => {
-    await goto('http://google.com');
-});
-
-step("Search for <query>", async (query) => {
-    await write(query);
-    await press('Enter');
+step("Goto Agile Pathway's home page", async () => {
+    await goto(site_url);
 });
 
 step("Page contains <content>", async (content) => {
