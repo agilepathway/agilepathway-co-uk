@@ -1,0 +1,22 @@
+version: 2.1
+executors:
+  circleci-gauge-executor:
+    docker:
+      - image: circleci/node:11.9.0-browsers
+
+jobs:
+  test:
+    working_directory: ~/agile-pathway-co-uk
+    executor: circleci-gauge-executor
+    steps:
+      - checkout
+      - run: curl -SsL https://downloads.gauge.org/stable | sh
+      - run: cd e2etests && gauge install && npm install && npm test
+      - store_artifacts:
+          path: reports
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - test
