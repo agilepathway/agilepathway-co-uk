@@ -4,12 +4,12 @@ on: push
 
 jobs:
   wait-for-netlify-deploy-preview:
-    
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Waiting for 200 from the Netlify Preview
-        uses: jakepartusch/wait-for-netlify-action@v1
+        uses: josephduffy/wait-for-netlify-action@v1
         id: waitFor200
         with:
           site_name: "agilepathway-co-uk"
