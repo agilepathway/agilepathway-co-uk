@@ -1,9 +1,9 @@
-name: Netlify Deploy Preview
+name: Netlify Deploy Preview Again
 
 on: push
 
 jobs:
-  wait-for-netlify-deploy-preview:
+  wait-for-netlify-deploy-preview-again:
 
     runs-on: ubuntu-latest
 
