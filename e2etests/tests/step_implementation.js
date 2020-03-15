@@ -13,13 +13,8 @@ afterSuite(async () => {
     await closeBrowser();
 });
 
-step("Goto Google's search page", async () => {
+step("Goto Agile Pathway's home page", async () => {
     await goto(site_url);
-});
-
-step("Search for <query>", async (query) => {
-    await write(query);
-    await press('Enter');
 });
 
 step("Page contains <content>", async (content) => {

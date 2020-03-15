@@ -1,7 +1,6 @@
-# Example spec
+# Agile Pathway spec
 
-## Search Google
+## Home page
 
-* Goto Google's search page
-* Search for "github Taiko"
-* Page contains "getgauge/taiko"
+* Goto Agile Pathway's home page
+* Page contains "Agile Pathway Ltd"
