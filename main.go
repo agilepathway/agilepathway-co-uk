@@ -8,14 +8,14 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/lambdacontext"
 
-	"github.com/netlify/open-api/go/plumbing"
-	"github.com/netlify/open-api/go/plumbing/operations"
+	// "github.com/netlify/open-api/go/plumbing"
+	// "github.com/netlify/open-api/go/plumbing/operations"
 	
 
-	"github.com/go-openapi/runtime"
-	httptransport "github.com/go-openapi/runtime/client"
+	// "github.com/go-openapi/runtime"
+	// httptransport "github.com/go-openapi/runtime/client"
 
-	strfmt "github.com/go-openapi/strfmt"
+	// strfmt "github.com/go-openapi/strfmt"
 
 )
 
