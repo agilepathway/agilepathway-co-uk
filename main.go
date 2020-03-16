@@ -21,7 +21,8 @@ import (
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
-	lc, ok := lambdacontext.FromContext(ctx)
+	lambdacontext.FromContext(ctx)
+	// lc, ok := lambdacontext.FromContext(ctx)
 	// if !ok {
 	// 	return &events.APIGatewayProxyResponse{
 	// 		StatusCode: 503,
