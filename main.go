@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "context"  this context import breaks things
+	"context"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
