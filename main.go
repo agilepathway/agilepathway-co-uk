@@ -32,10 +32,12 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 	cc := lc.ClientContext
 
-	fmt.Println(cc)
-
 	// Get the deploys
-	// client := cc.Client
+
+	client := cc.Client
+
+	fmt.Println(client)
+
 	// var authInfo = nil
 	// var deploys = client.ListSiteDeploys(authInfo)
 	// fmt.Println("Deploys:", deploys)
