@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Waiting for 200 from the Netlify Preview
-        uses: agilepathway/wait-for-netlify-action@v1
+        uses: agilepathway/wait-for-netlify-action@v1.0.1
         id: waitFor200
         with:
           site_name: "agilepathway-co-uk"
