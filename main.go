@@ -29,9 +29,11 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 			Body:       "Something went wrong :(",
 		}, nil
 	}
-	fmt.Println(lc)
 
-	// cc := lc.ClientContext
+	cc := lc.ClientContext
+
+	fmt.Println(cc)
+
 	// Get the deploys
 	// client := cc.Client
 	// var authInfo = nil
