@@ -13,8 +13,7 @@ import (
 func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 	// Get the deploys
-	// var client = NewHTTPClient(nil)
-	var client = Default
+	var client = NewHTTPClient(nil)
 	var authInfo = nil
 	var deploys = Default.ListSiteDeploys(authInfo)
 	fmt.Println("Deploys:", deploys)
