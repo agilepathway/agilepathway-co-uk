@@ -7,14 +7,16 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 
 	"github.com/netlify/open-api/go/plumbing"
+	"github.com/netlify/open-api/go/plumbing/operations"
 )
 
 func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 	// Get the deploys
-	var Default = NewHTTPClient(nil)
-	// const deploys = client.ListSiteDeploys(authInfo)
-	/fmt.Println("Deploys:", deploys)
+	var client = NewHTTPClient(nil)
+	var authInfo = nil
+	var deploys = client.ListSiteDeploys(authInfo)
+	fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
