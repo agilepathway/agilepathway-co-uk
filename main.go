@@ -22,13 +22,14 @@ import (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 	lambdacontext.FromContext(ctx)
-	// lc, ok := lambdacontext.FromContext(ctx)
-	// if !ok {
-	// 	return &events.APIGatewayProxyResponse{
-	// 		StatusCode: 503,
-	// 		Body:       "Something went wrong :(",
-	// 	}, nil
-	// }
+	lc, ok := lambdacontext.FromContext(ctx)
+	if !ok {
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 503,
+			Body:       "Something went wrong :(",
+		}, nil
+	}
+	fmt.Println(lc)
 
 	// cc := lc.ClientContext
 	// Get the deploys
