@@ -16,13 +16,22 @@ import (
 
 )
 
-func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
+	lc, ok := lambdacontext.FromContext(ctx)
+	if !ok {
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 503,
+			Body:       "Something went wrong :(",
+		}, nil
+	}
+
+	cc := lc.ClientContext
 	// Get the deploys
-	var client = NewHTTPClient(nil)
-	var authInfo = nil
-	var deploys = Default.ListSiteDeploys(authInfo)
-	fmt.Println("Deploys:", deploys)
+	var client := cc.GetClient(ctx)
+	// var authInfo = nil
+	// var deploys = Default.ListSiteDeploys(authInfo)
+	// fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
