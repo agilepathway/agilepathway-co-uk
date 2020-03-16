@@ -13,9 +13,10 @@ import (
 func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 	// Get the deploys
-	var client = NewHTTPClient(nil)
+	// var client = NewHTTPClient(nil)
+	var client = Default
 	var authInfo = nil
-	var deploys = client.ListSiteDeploys(authInfo)
+	var deploys = Default.ListSiteDeploys(authInfo)
 	fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
