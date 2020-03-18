@@ -7,7 +7,6 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	// "github.com/aws/aws-lambda-go/lambdacontext"
 
 	// "github.com/netlify/open-api/go/plumbing"
 	// "github.com/netlify/open-api/go/plumbing/operations"
@@ -22,25 +21,9 @@ import (
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
-	// lambdacontext.FromContext(ctx)
-	// lc, ok := lambdacontext.FromContext(ctx)
-	// if !ok {
-	// 	return &events.APIGatewayProxyResponse{
-	// 		StatusCode: 503,
-	// 		Body:       "Something went wrong :(",
-	// 	}, nil
-	// }
 
 	//var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
 	var list_site_deploys_token = "1234"
-
-	// cc := lc.ClientContext
-
-	// Get the deploys
-
-	// client := cc.Client
-
-	// fmt.Println(client)
 
 	authInfo := runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
 		r.SetHeaderParam("User-Agent", "agilepathway")
