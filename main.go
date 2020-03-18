@@ -46,7 +46,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	var netlify_client = getNetlifyClient()
 
 	list_site_deploys_params := operations.NewListSiteDeploysParams()
-	site_id := os.Getenv("SITE_ID")
+	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID") // soon SITE_ID should be available instead
 	list_site_deploys_params.SiteID = site_id
 	fmt.Println("site id:", site_id)
 
