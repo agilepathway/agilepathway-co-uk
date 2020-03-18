@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	// "os"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -22,8 +22,7 @@ import (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
-	//var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
-	var list_site_deploys_token = "1234"
+	var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
 
 	authInfo := runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
 		r.SetHeaderParam("User-Agent", "agilepathway")
