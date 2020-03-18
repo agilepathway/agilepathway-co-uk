@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 
 	"github.com/netlify/open-api/go/plumbing"
-	// "github.com/netlify/open-api/go/plumbing/operations"
+	"github.com/netlify/open-api/go/plumbing/operations"
 	
 	"github.com/go-openapi/runtime"
 	openapiClient "github.com/go-openapi/runtime/client"
@@ -46,7 +46,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 	var netlify_client = getNetlifyClient()
 
-	var deploys = netlify_client.ListSiteDeploys(authInfo)
+	var deploys = netlify_client.Operations.ListSiteDeploys(authInfo)
 	fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
