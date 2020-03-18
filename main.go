@@ -50,7 +50,8 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	list_site_deploys_params.SiteID = site_id
 	fmt.Println("site id:", site_id)
 
-	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
+	// var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
+	var deploys, error = operations.ListSiteDeploys(list_site_deploys_params, authInfo)
 	fmt.Println("Deploys:", deploys)
 	fmt.Println("Error:", error)
 
