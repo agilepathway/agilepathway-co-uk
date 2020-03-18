@@ -32,6 +32,9 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 	fmt.Println("authInfo:", authInfo)
 
+	var client = getNetlifyClient()
+	fmt.Println("Client:", client)
+
 
 	// var deploys = client.ListSiteDeploys(authInfo)
 	// fmt.Println("Deploys:", deploys)
@@ -42,6 +45,17 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
+}
+
+func getNetlifyClient() (*plumbing.Netlify) {
+	// Create OpenAPI transport
+	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, p.getHTTPClient())
+	transport.SetDebug(true)
+
+	// Create Netlify client by adding the transport to it
+	client := plumbing.New(transport, strfmt.Default)
+
+	return client
 }
 
 func main() {
