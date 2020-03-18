@@ -28,12 +28,7 @@ const (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
-	list_site_deploys_params := operations.NewListSiteDeploysParams()
-	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID")
-	// soon SITE_ID should be available - https://github.com/netlify/build/issues/743
-	list_site_deploys_params.SiteID = site_id
-
-	var deploys, error = getNetlifyClient().Operations.ListSiteDeploys(list_site_deploys_params, getAuthInfo())
+	var deploys, error = getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
 	fmt.Println("Deploys:", deploys.Payload)
 	fmt.Println("Error:", error)
 
@@ -43,6 +38,11 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
+}
+
+func getListSiteDeploysParams() (*operations.ListSiteDeploysParams){
+	// soon os.Getenv("SITE_ID") should be available - https://github.com/netlify/build/issues/743
+	return operations.NewListSiteDeploysParams().WithSiteID(os.Getenv("AGILE_PATHWAY_SITE_ID")) 
 }
 
 func getNetlifyClient() (*plumbing.Netlify) {
