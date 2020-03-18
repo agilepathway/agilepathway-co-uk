@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 
 	"github.com/netlify/open-api/go/plumbing"
-	"github.com/netlify/open-api/go/plumbing/operations"
+	// "github.com/netlify/open-api/go/plumbing/operations"
 	
 	"github.com/go-openapi/runtime"
 	openapiClient "github.com/go-openapi/runtime/client"
