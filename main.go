@@ -18,6 +18,15 @@ import (
 
 )
 
+// Netlify specific constants
+const (
+	NetlifyAPIHost string = "api.netlify.com"
+
+	// NetlifyAPIPath is path attached to baseURL for making Netlify API request
+	NetlifyAPIPath string = "/api/v1"
+
+)
+
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
