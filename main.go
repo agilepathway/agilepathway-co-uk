@@ -61,10 +61,10 @@ type ListSiteDeploysParams struct {
     site_id string
 }
 
-func getListSiteDeploysParams() {
+func getListSiteDeploysParams() (*ListSiteDeploysParams) {
 	var site_id = os.Getenv("SITE_ID")
 	fmt.Println("site id:", site_id)
-	var params = ListSiteDeploysParams{site_id: site_id}
+	params := ListSiteDeploysParams{site_id: site_id}
 	return params
 }
 
