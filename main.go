@@ -57,6 +57,10 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	}, nil
 }
 
+type ListSiteDeploysParams struct {
+    site_id string
+}
+
 func getListSiteDeploysParams() {
 	var site_id = os.Getenv("SITE_ID")
 	fmt.Println("site id:", site_id)
