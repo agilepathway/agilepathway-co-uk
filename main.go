@@ -13,23 +13,16 @@ import (
 
 	"github.com/netlify/open-api/go/plumbing"
 	"github.com/netlify/open-api/go/plumbing/operations"
-
-	
 	"github.com/go-openapi/runtime"
 	openapiClient "github.com/go-openapi/runtime/client"
-
 	"github.com/go-openapi/strfmt"
 
 )
 
 // Netlify specific constants
 const (
-	// TODO: do I need these - I think they might be the defaults anyway?
 	NetlifyAPIHost string = "api.netlify.com"
-
-	// NetlifyAPIPath is path attached to baseURL for making Netlify API request
 	NetlifyAPIPath string = "/api/v1"
-
 )
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
@@ -49,7 +42,6 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID")
 	// soon SITE_ID should be available - https://github.com/netlify/build/issues/743
 	list_site_deploys_params.SiteID = site_id
-	fmt.Println("site id:", site_id)
 
 	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
 	fmt.Println("Deploys:", deploys.Payload)
