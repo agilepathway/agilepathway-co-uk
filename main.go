@@ -20,6 +20,7 @@ import (
 
 // Netlify specific constants
 const (
+	// TODO: do I need these - I think they might be the defaults anyway?
 	NetlifyAPIHost string = "api.netlify.com"
 
 	// NetlifyAPIPath is path attached to baseURL for making Netlify API request
@@ -57,13 +58,17 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 func getNetlifyClient() (*plumbing.Netlify) {
 	// Create OpenAPI transport
-	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, p.getHTTPClient())
+	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, getHTTPClient())
 	transport.SetDebug(true)
 
 	// Create Netlify client by adding the transport to it
 	client := plumbing.New(transport, strfmt.Default)
 
 	return client
+}
+
+func getHTTPClient() {
+	return nil
 }
 
 func main() {
