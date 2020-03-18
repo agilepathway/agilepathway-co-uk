@@ -46,12 +46,13 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	var netlify_client = getNetlifyClient()
 
 	list_site_deploys_params := operations.NewListSiteDeploysParams()
-	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID") // soon SITE_ID should be available instead
+	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID")
+	// soon SITE_ID should be available - https://github.com/netlify/build/issues/743
 	list_site_deploys_params.SiteID = site_id
 	fmt.Println("site id:", site_id)
 
 	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
-	fmt.Println("Deploys:", deploys.GetPayload())
+	fmt.Println("Deploys:", deploys.Payload)
 	fmt.Println("Error:", error)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
@@ -64,13 +65,8 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 
 func getNetlifyClient() (*plumbing.Netlify) {
-	// Create OpenAPI transport
 	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, getHTTPClient())
-	transport.SetDebug(true)
-
-	// Create Netlify client by adding the transport to it
 	client := plumbing.New(transport, strfmt.Default)
-
 	return client
 }
 
