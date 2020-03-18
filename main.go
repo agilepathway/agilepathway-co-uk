@@ -45,8 +45,9 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	fmt.Println("authInfo:", authInfo)
 
 	var netlify_client = getNetlifyClient()
+	var list_site_deploys_params = NewListSiteDeploysParams()
 
-	var deploys, error = netlify_client.Operations.ListSiteDeploys(nil, authInfo)
+	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
 	fmt.Println("Deploys:", deploys)
 	fmt.Println("Error:", error)
 
@@ -56,6 +57,10 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
+}
+
+func getListSiteDeploysParams() (*ListSiteDeploysParams) {
+	return NewListSiteDeploysParams()
 }
 
 func getNetlifyClient() (*plumbing.Netlify) {
