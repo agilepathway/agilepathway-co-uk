@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
+	// "os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -31,7 +31,8 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		}, nil
 	}
 
-	var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
+	//var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
+	var list_site_deploys_token = "1234"
 
 	// cc := lc.ClientContext
 
@@ -47,9 +48,11 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		return nil
 	})
 
+	fmt.Println("authInfo:", authInfo)
+
 
 	// var deploys = client.ListSiteDeploys(authInfo)
-	fmt.Println("Deploys:", deploys)
+	// fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
