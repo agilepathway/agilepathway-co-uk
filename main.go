@@ -48,6 +48,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 	var deploys, error = netlify_client.Operations.ListSiteDeploys(nil, authInfo)
 	fmt.Println("Deploys:", deploys)
+	fmt.Println("Error:", error)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
