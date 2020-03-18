@@ -28,14 +28,6 @@ const (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
-	var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
-
-	authInfo := runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
-		r.SetHeaderParam("User-Agent", "agilepathway")
-		r.SetHeaderParam("Authorization", "Bearer "+list_site_deploys_token)
-		return nil
-	})
-
 	var netlify_client = getNetlifyClient()
 
 	list_site_deploys_params := operations.NewListSiteDeploysParams()
@@ -43,7 +35,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	// soon SITE_ID should be available - https://github.com/netlify/build/issues/743
 	list_site_deploys_params.SiteID = site_id
 
-	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
+	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, getAuthInfo())
 	fmt.Println("Deploys:", deploys.Payload)
 	fmt.Println("Error:", error)
 
@@ -53,6 +45,14 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
+}
+
+func getAuthInfo() (runtime.ClientAuthInfoWriter){
+	return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
+		r.SetHeaderParam("User-Agent", "agilepathway")
+		r.SetHeaderParam("Authorization", "Bearer "+os.Getenv("LIST_SITE_DEPLOYS_TOKEN"))
+		return nil
+	})
 }
 
 
