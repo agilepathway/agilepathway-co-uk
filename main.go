@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -12,7 +13,7 @@ import (
 	// "github.com/netlify/open-api/go/plumbing/operations"
 	
 
-	// "github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime"
 	// httptransport "github.com/go-openapi/runtime/client"
 
 	// strfmt "github.com/go-openapi/strfmt"
@@ -30,16 +31,24 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		}, nil
 	}
 
-	cc := lc.ClientContext
+	var list_site_deploys_token = os.Getenv("LIST_SITE_DEPLOYS_TOKEN")
+
+	// cc := lc.ClientContext
 
 	// Get the deploys
 
-	client := cc.Client
+	// client := cc.Client
 
-	fmt.Println(client)
+	// fmt.Println(client)
 
-	authInfo := nil
-	var deploys = client.ListSiteDeploys(authInfo)
+	authInfo := runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
+		r.SetHeaderParam("User-Agent", "agilepathway")
+		r.SetHeaderParam("Authorization", "Bearer "+list_site_deploys_token)
+		return nil
+	})
+
+
+	// var deploys = client.ListSiteDeploys(authInfo)
 	fmt.Println("Deploys:", deploys)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
