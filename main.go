@@ -28,14 +28,12 @@ const (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
-	var netlify_client = getNetlifyClient()
-
 	list_site_deploys_params := operations.NewListSiteDeploysParams()
 	site_id := os.Getenv("AGILE_PATHWAY_SITE_ID")
 	// soon SITE_ID should be available - https://github.com/netlify/build/issues/743
 	list_site_deploys_params.SiteID = site_id
 
-	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, getAuthInfo())
+	var deploys, error = getNetlifyClient().Operations.ListSiteDeploys(list_site_deploys_params, getAuthInfo())
 	fmt.Println("Deploys:", deploys.Payload)
 	fmt.Println("Error:", error)
 
