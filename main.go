@@ -13,6 +13,7 @@ import (
 
 	"github.com/netlify/open-api/go/plumbing"
 	"github.com/netlify/open-api/go/plumbing/operations"
+
 	
 	"github.com/go-openapi/runtime"
 	openapiClient "github.com/go-openapi/runtime/client"
@@ -43,7 +44,11 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	})
 
 	var netlify_client = getNetlifyClient()
-	var list_site_deploys_params = getListSiteDeploysParams()
+
+	params := operations.NewListSiteDeploysParams()
+	site_id := os.Getenv("SITE_ID")
+	params.site_id = site_id
+	fmt.Println("site id:", site_id)
 
 	var deploys, error = netlify_client.Operations.ListSiteDeploys(list_site_deploys_params, authInfo)
 	fmt.Println("Deploys:", deploys)
@@ -57,16 +62,6 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	}, nil
 }
 
-type ListSiteDeploysParams struct {
-    site_id string
-}
-
-func getListSiteDeploysParams() (*ListSiteDeploysParams) {
-	var site_id = os.Getenv("SITE_ID")
-	fmt.Println("site id:", site_id)
-	params := ListSiteDeploysParams{site_id: site_id}
-	return params
-}
 
 func getNetlifyClient() (*plumbing.Netlify) {
 	// Create OpenAPI transport
