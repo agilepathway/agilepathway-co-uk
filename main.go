@@ -45,19 +45,18 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	}, nil
 }
 
+func getNetlifyClient() (*plumbing.Netlify) {
+	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, getHTTPClient())
+	client := plumbing.New(transport, strfmt.Default)
+	return client
+}
+
 func getAuthInfo() (runtime.ClientAuthInfoWriter){
 	return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
 		r.SetHeaderParam("User-Agent", "agilepathway")
 		r.SetHeaderParam("Authorization", "Bearer "+os.Getenv("LIST_SITE_DEPLOYS_TOKEN"))
 		return nil
 	})
-}
-
-
-func getNetlifyClient() (*plumbing.Netlify) {
-	transport := openapiClient.NewWithClient(NetlifyAPIHost, NetlifyAPIPath, plumbing.DefaultSchemes, getHTTPClient())
-	client := plumbing.New(transport, strfmt.Default)
-	return client
 }
 
 func getHTTPClient() *http.Client {
