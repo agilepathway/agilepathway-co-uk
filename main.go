@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net"
 	"net/http"
@@ -17,11 +18,8 @@ import (
 	"github.com/go-openapi/runtime"
 	openapiClient "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-
-	// "github.com/kr/pretty"
 )
 
-// Netlify specific constants
 const (
 	NetlifyAPIHost string = "api.netlify.com"
 	NetlifyAPIPath string = "/api/v1"
@@ -31,31 +29,26 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	commit := request.QueryStringParameters["commit"]
 	fmt.Println("Finding deploy preview URL for commit:", commit)
 
-	var raw_deploys, error = getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
-	var deploys = raw_deploys.Payload
-	// fmt.Printf("%# v", pretty.Formatter(deploys[0])) 
-	fmt.Println("Error:", error)
+	raw_deploys, error := getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
+	deploys := raw_deploys.Payload
 
-	// return either the build id in a 200, or a 404
-	// inner function that either returns the build id or nil
-	build_id := getBuildIDForCommit(commit, deploys)
-	fmt.Println("Build id:",build_id)
+	build_id, _ := getBuildIDForCommit(commit, deploys)
 
-	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
-	fmt.Println("Deploy preview url found:", deploy_preview_url)
+	deploy_preview_url := fmt.Sprintf("https://%s--agilepathway-co-uk.netlify.com", build_id)
+	fmt.Printf("Deploy preview url for commit %s: %s", commit, deploy_preview_url)
 	return &events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
 }
 
-func getBuildIDForCommit(commit string, deploys []*models.Deploy) (string) {
+func getBuildIDForCommit(commit string, deploys []*models.Deploy) (string, error) {
 	for _, deploy := range deploys {
 		if deploy.CommitRef == commit {
-			return deploy.BuildID 
+			return deploy.BuildID, nil
 		}
 	}
-	return "nope"
+	return "", errors.New(fmt.Sprintf("No Netlify deployment found for commit: %s", commit))
 }
 
 func getListSiteDeploysParams() (*operations.ListSiteDeploysParams){
