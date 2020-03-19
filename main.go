@@ -17,6 +17,7 @@ import (
 	openapiClient "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
+	"github.com/kr/pretty"
 )
 
 // Netlify specific constants
@@ -28,8 +29,9 @@ const (
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
 
-	var deploys, error = getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
-	fmt.Println("Deploys:", deploys.Payload)
+	var raw_deploys, error = getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
+	var deploys = raw_deploys.Payload
+	fmt.Printf("%# v", pretty.Formatter(deploys[0])) 
 	fmt.Println("Error:", error)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
