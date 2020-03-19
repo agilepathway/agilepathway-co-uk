@@ -17,7 +17,7 @@ import (
 	openapiClient "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/kr/pretty"
+	// "github.com/kr/pretty"
 )
 
 // Netlify specific constants
@@ -27,12 +27,20 @@ const (
 )
 
 func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	fmt.Println("Finding deploy preview URL for commit:", request.QueryStringParameters["commit"])
+	commit := request.QueryStringParameters["commit"]
+	fmt.Println("Finding deploy preview URL for commit:", commit)
 
 	var raw_deploys, error = getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
 	var deploys = raw_deploys.Payload
-	fmt.Printf("%# v", pretty.Formatter(deploys[0])) 
+	// fmt.Printf("%# v", pretty.Formatter(deploys[0])) 
 	fmt.Println("Error:", error)
+
+	// return either the build id in a 200, or a 404
+	// inner function that either returns the build id or nil
+
+	for _, deploy := range deploys {
+		fmt.Println("Iterating over each deploy:",deploy)
+	}
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
