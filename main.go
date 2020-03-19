@@ -11,6 +11,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 
+	"github.com/netlify/open-api/go/models"
 	"github.com/netlify/open-api/go/plumbing"
 	"github.com/netlify/open-api/go/plumbing/operations"
 	"github.com/go-openapi/runtime"
@@ -37,10 +38,8 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 
 	// return either the build id in a 200, or a 404
 	// inner function that either returns the build id or nil
-
-	for _, deploy := range deploys {
-		fmt.Println("Iterating over each deploy:",deploy)
-	}
+	build_id := getBuildIDForCommit(commit, deploys)
+	fmt.Println("Build id:",build_id)
 
 	const deploy_preview_url = "https://netlify-function--agilepathway-co-uk.netlify.com"
 	fmt.Println("Deploy preview url found:", deploy_preview_url)
@@ -48,6 +47,15 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		StatusCode: 200,
 		Body:       deploy_preview_url,
 	}, nil
+}
+
+func getBuildIDForCommit(commit string, deploys []*models.Deploy) (string) {
+	for _, deploy := range deploys {
+		if deploy.CommitRef == commit {
+			return deploy.BuildID 
+		}
+	}
+	return "nope"
 }
 
 func getListSiteDeploysParams() (*operations.ListSiteDeploysParams){
