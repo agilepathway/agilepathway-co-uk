@@ -32,7 +32,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	raw_deploys, error := getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
 	deploys := raw_deploys.Payload
 
-	build_id, error := getBuildIDForCommit(commit, deploys)
+	deploy_id, error := getDeployIDForCommit(commit, deploys)
 
 	if error != nil {
 		return &events.APIGatewayProxyResponse{
@@ -40,7 +40,7 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		}, nil
 	}
 
-	deploy_preview_url := fmt.Sprintf("https://%s--agilepathway-co-uk.netlify.com", build_id)
+	deploy_preview_url := fmt.Sprintf("https://%s--agilepathway-co-uk.netlify.com", deploy_id)
 	fmt.Printf("Deploy preview url for commit %s: %s", commit, deploy_preview_url)
 	return &events.APIGatewayProxyResponse{
 		StatusCode: 200,
@@ -48,10 +48,10 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	}, nil
 }
 
-func getBuildIDForCommit(commit string, deploys []*models.Deploy) (string, error) {
+func getDeployIDForCommit(commit string, deploys []*models.Deploy) (string, error) {
 	for _, deploy := range deploys {
 		if deploy.CommitRef == commit {
-			return deploy.BuildID, nil
+			return deploy.ID, nil
 		}
 	}
 	return "", errors.New(fmt.Sprintf("No Netlify deployment found for commit: %s", commit))
