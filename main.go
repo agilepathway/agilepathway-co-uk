@@ -32,7 +32,13 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	raw_deploys, error := getNetlifyClient().Operations.ListSiteDeploys(getListSiteDeploysParams(), getAuthInfo())
 	deploys := raw_deploys.Payload
 
-	build_id, _ := getBuildIDForCommit(commit, deploys)
+	build_id, error := getBuildIDForCommit(commit, deploys)
+
+	if error != nil {
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 404,
+		}, nil
+	}
 
 	deploy_preview_url := fmt.Sprintf("https://%s--agilepathway-co-uk.netlify.com", build_id)
 	fmt.Printf("Deploy preview url for commit %s: %s", commit, deploy_preview_url)
