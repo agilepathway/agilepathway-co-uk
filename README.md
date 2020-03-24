@@ -1,5 +1,7 @@
 # Gatsby Portfolio Website
 
+[![agilepathway](https://circleci.com/gh/agilepathway/agilepathway-co-uk.svg?style=svg)](https://circleci.com/gh/agilepathway/agilepathway-co-uk)
+
 This repo contains a static website written with [GatsbyJS](https://www.gatsbyjs.org/), integrated with content coming from [DatoCMS](https://www.datocms.com).
 
 ![Preview](preview.png)
@@ -51,3 +53,17 @@ This websites uses:
 - [Yarn](https://yarnpkg.com/) as package manager;
 - [GatsbyJS](https://github.com/gatsbyjs/gatsby) as website generator;
 - [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) to integrate the website with DatoCMS.
+
+
+## Running the specifications
+
+The files in the specs directory are [Gauge](https://gauge.org) executable specification files. 
+
+They follow markdown syntax. 
+
+Every heading in these files denotes a scenario. Every bulleted point denotes a step.
+
+Prerequisites: [Gauge](https://gauge.org) and [npm](https://github.com/npm/cli)
+
+To execute the specifications, go to the e2etests directory and run
+	`npm test`

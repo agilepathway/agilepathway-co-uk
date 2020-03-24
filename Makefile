@@ -1,0 +1,3 @@
+build:
+	mkdir -p serverless/functions/build
+	GOBIN=${PWD}/serverless/functions/build go install ./serverless/functions/...
