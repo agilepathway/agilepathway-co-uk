@@ -30,6 +30,8 @@ jobs:
       - run:
           name: Check test site is up
           command: ./.circleci/scripts/check-test-site-up.sh
-      - run: cd e2etests && gauge install && npm install && npm test
+      - run: cd e2etests && gauge install && gauge install xml-report && npm install && gauge run specs
       - store_artifacts:
-          path: reports
+          path: ./e2etests/reports/html-report/
+      - store_test_results:
+          path: ./e2etests/reports/xml-report/
