@@ -2,11 +2,12 @@ version: 2.1
 
 orbs:
   shellcheck: circleci/shellcheck@1.3.15
+  browser-tools: circleci/browser-tools@0.1.4
 
 executors:
   circleci-gauge-executor:
     docker:
-      - image: circleci/node:11.9.0-browsers
+      - image: cimg/node:13.11
 
 workflows:
   version: 2
@@ -23,14 +24,17 @@ jobs:
     executor: circleci-gauge-executor
     steps:
       - checkout
-      - run: curl -SsL https://downloads.gauge.org/stable | sh
+      - browser-tools/install-chrome
+      - run:
+          name: Install Gauge
+          command: ./.circleci/scripts/install-gauge.sh
       - run:
           name: Define TEST_SITE_URL Environment Variable at Runtime
           command: ./.circleci/scripts/set-test-site-url.sh
       - run:
           name: Check test site is up
           command: ./.circleci/scripts/check-test-site-up.sh
-      - run: cd e2etests && gauge install && gauge install xml-report && npm install && gauge run specs
+      - run: cd e2etests && npm install && gauge run specs
       - store_artifacts:
           path: ./e2etests/reports/html-report/
       - store_test_results:
