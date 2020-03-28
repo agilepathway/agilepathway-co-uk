@@ -24,5 +24,5 @@ step("Goto Agile Pathway's home page", async () => {
 });
 
 step("Page contains <content>", async (content) => {
-    assert.ok(await text(contains(content)).exists());
+    assert.ok(await text(content).exists());
 });
