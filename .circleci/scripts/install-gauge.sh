@@ -5,7 +5,6 @@ npm set prefix=/home/circleci/npm && echo "export PATH=/home/circleci/npm/bin:$P
 # shellcheck source=/dev/null
 source "$BASH_ENV"
 npm install -g npm@latest
-npm install
 npm install -g @getgauge/cli --unsafe-perm
 gauge install
 gauge install html-report
