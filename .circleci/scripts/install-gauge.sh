@@ -13,4 +13,3 @@ gauge install screenshot
 gauge install xml-report
 gauge install js
 npm install -g taiko --allow-root --unsafe-perm
-gauge init js
