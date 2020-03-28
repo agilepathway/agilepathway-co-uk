@@ -6,7 +6,6 @@ const headless = process.env.headless_chrome.toLowerCase() === 'true';
 const site_url = process.env.TEST_SITE_URL
 
 beforeSuite(async () => {
-    // await openBrowser({ headless: headless })
     await openBrowser({ headless: true, args: [
         '--disable-gpu',
          '--disable-dev-shm-usage',
