@@ -1,5 +1,11 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "dockerfile": {
+    "fileMatch": [
+      ".circleci/config.yml"
+    ],
+    "pinDigests": true
+  }
 }
