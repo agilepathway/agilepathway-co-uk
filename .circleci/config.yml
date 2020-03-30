@@ -6,7 +6,7 @@ orbs:
 executors:
   circleci-gauge-executor:
     docker:
-      - image: circleci/node:11.9.0-browsers
+      - image: circleci/node:11.15.0-browsers
 
 workflows:
   version: 2
