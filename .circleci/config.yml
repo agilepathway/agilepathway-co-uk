@@ -6,7 +6,7 @@ orbs:
 executors:
   circleci-gauge-executor:
     docker:
-      - image: circleci/node:11.15.0-browsers
+      - image: agilepathway/cimg-gauge:1.0.8
 
 workflows:
   version: 2
@@ -23,14 +23,13 @@ jobs:
     executor: circleci-gauge-executor
     steps:
       - checkout
-      - run: curl -SsL https://downloads.gauge.org/stable | sh
       - run:
           name: Define TEST_SITE_URL Environment Variable at Runtime
           command: ./.circleci/scripts/set-test-site-url.sh
       - run:
           name: Check test site is up
           command: ./.circleci/scripts/check-test-site-up.sh
-      - run: cd e2etests && gauge install && gauge install xml-report && npm install && gauge run specs
+      - run: cd e2etests && npm install && gauge run specs
       - store_artifacts:
           path: ./e2etests/reports/html-report/
       - store_test_results:
