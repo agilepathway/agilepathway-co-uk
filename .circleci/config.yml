@@ -13,9 +13,7 @@ workflows:
   test:
     jobs:
       - shellcheck/check
-      - test:
-          requires:
-            - shellcheck/check
+      - test
 
 jobs:
   test:
