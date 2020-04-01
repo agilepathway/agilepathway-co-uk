@@ -22,7 +22,6 @@ jobs:
     executor: circleci-gauge-executor
     steps:
       - checkout
-      - browser-tools/install-chromedriver
       - run: cd e2etests && npm install
       - run:
           name: Define TEST_SITE_URL Environment Variable at Runtime
