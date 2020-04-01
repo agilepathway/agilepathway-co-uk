@@ -13,9 +13,7 @@ workflows:
   test:
     jobs:
       - shellcheck/check
-      - test:
-          requires:
-            - shellcheck/check
+      - test
 
 jobs:
   test:
@@ -23,13 +21,14 @@ jobs:
     executor: circleci-gauge-executor
     steps:
       - checkout
+      - run: cd e2etests && npm install
       - run:
           name: Define TEST_SITE_URL Environment Variable at Runtime
           command: ./.circleci/scripts/set-test-site-url.sh
       - run:
           name: Check test site is up
           command: ./.circleci/scripts/check-test-site-up.sh
-      - run: cd e2etests && npm install && gauge run specs
+      - run: cd e2etests && gauge run specs
       - store_artifacts:
           path: ./e2etests/reports/html-report/
       - store_test_results:
