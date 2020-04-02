@@ -6,7 +6,7 @@ orbs:
 executors:
   circleci-gauge-executor:
     docker:
-      - image: agilepathway/cimg-gauge:1.0.8
+      - image: agilepathway/cimg-gauge:1.0.8-CIRCLECI-49
 
 workflows:
   version: 2
