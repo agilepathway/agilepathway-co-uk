@@ -6,7 +6,7 @@ orbs:
 executors:
   circleci-gauge-executor:
     docker:
-      - image: agilepathway/cimg-gauge:1.0.8-CIRCLECI-49
+      - image: agilepathway/cimg-gauge:1.0.8-CIRCLECI-110
 
 workflows:
   version: 2
@@ -21,7 +21,7 @@ jobs:
     executor: circleci-gauge-executor
     steps:
       - checkout
-      - run: cd e2etests && npm install
+      - run: cd e2etests && npm link taiko
       - run:
           name: Define TEST_SITE_URL Environment Variable at Runtime
           command: ./.circleci/scripts/set-test-site-url.sh
