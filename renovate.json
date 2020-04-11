@@ -1,5 +1,15 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "docker": {
+    "digest": {
+      "enabled": true
+    }
+  },
+  "circleci": {
+    "digest": {
+      "enabled": true
+    }
+  }
 }
